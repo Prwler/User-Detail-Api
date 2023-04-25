@@ -9,10 +9,10 @@ export class UserRepository extends Repository<User> {
         return await this.find();
     }
   
-    async getUserById(user_id: any): Promise<User> {
+    async getUserById(user_id: number): Promise<User> {
         const user = this.findById(user_id);
-        return await this.findOne(user_id);
-      }
+        return await this.findOne({ where: { user_id: user_id } });
+    }
     findById(user_id: any) {
         throw new Error('Method not implemented.');
     }

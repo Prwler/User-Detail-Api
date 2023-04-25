@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post,} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post,} from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiCreatedResponse, ApiTags, ApiBody } from '@nestjs/swagger';
 import { UserDto } from './user.dto';
@@ -22,9 +22,14 @@ export class UserController {
       return { data: users };
     }
 
-    @Get("users_by_id")
-    async getUserById(@Param('id') user_id: number): Promise<User[]> {
+    @Get("users_by_id/:id")
+    async getUserById(@Param('id') user_id: number): Promise<User> {
       const user = await this.userService.getUserById(user_id);
       return user;
+    }
+
+    @Delete("users_by_id/:user_id")
+    async deleteUserById(@Param('user_id') user_id: number): Promise<CustomResponse>{
+      return await this.userService.deleteUserById(user_id);
     }
 }

@@ -5,6 +5,7 @@ import { UserDto } from './user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CustomResponse } from './custom-response.interface';
+import { exists } from 'fs';
 
 @Injectable()
 export class UserService {
@@ -33,20 +34,21 @@ export class UserService {
           return users;
       }
 
-      //Get user by Id
-      // @Get('/users/:id')
-      // async getUserById(@Param('id') user_id: number): Promise<User> {
-      //   const user = await this.userRepository.getUserById(user_id);
-      //     return user;
-      // }
+      async getUserById(user_id: any): Promise<User> {
+        return await this.UserRepository.findOne({where: {user_id: user_id}});
 
-      async getUserById(user_id: any): Promise<User[]> {
-        const user = await this.UserRepository.find(user_id);
-        if (!user) {
-          throw new NotFoundException(`User with ID ${user_id} not found`);
-        }
-        return user;
+        //  const user = await this.UserRepository.findOne(user_id);
+        //  if (!user) {
+        //     throw new NotFoundException(`User with ID ${user_id} not found`);
+        //   }
+        //  return user;
       }
 
-
+      async deleteUserById(user_id: number): Promise<CustomResponse>{
+        const user = await this.UserRepository.delete({user_id: user_id});
+          return{
+            statusCode: HttpStatus.OK,
+            message: "Deleted user"
+          }
+      }
 }
