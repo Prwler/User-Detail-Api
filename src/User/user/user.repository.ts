@@ -16,10 +16,4 @@ export class UserRepository extends Repository<User> {
     findById(user_id: any) {
         throw new Error('Method not implemented.');
     }
-      
-
-    // async getUserById(id: number): Promise<User> {
-    //     const user = await this.findOne({ where: { user_id: id } });
-    //     return user;
-    //   }
 }

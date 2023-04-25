@@ -36,12 +36,6 @@ export class UserService {
 
       async getUserById(user_id: any): Promise<User> {
         return await this.UserRepository.findOne({where: {user_id: user_id}});
-
-        //  const user = await this.UserRepository.findOne(user_id);
-        //  if (!user) {
-        //     throw new NotFoundException(`User with ID ${user_id} not found`);
-        //   }
-        //  return user;
       }
 
       async deleteUserById(user_id: number): Promise<CustomResponse>{
